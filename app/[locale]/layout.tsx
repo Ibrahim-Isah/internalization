@@ -1,8 +1,6 @@
-import '../globals.css';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-import { NextIntlClientProvider } from 'next-intl';
-import { notFound } from 'next/navigation';
+import '../globals.css';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -22,19 +20,9 @@ export default async function RootLayout({
 	children: React.ReactNode;
 	params: { locale: string };
 }) {
-	let locales;
-	try {
-		locales = (await import(`../../languages/${locale}.json`)).default;
-	} catch (error) {
-		notFound();
-	}
 	return (
 		<html lang={locale}>
-			<body className={inter.className}>
-				<NextIntlClientProvider locale={locale} messages={locales}>
-					{children}
-				</NextIntlClientProvider>
-			</body>
+			<body className={inter.className}>{children}</body>
 		</html>
 	);
 }
